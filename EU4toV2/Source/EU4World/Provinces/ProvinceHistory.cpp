@@ -53,7 +53,7 @@ EU4::ProvinceHistory::ProvinceHistory(std::istream& theStream)
 		DateItems theItems(dateString, theStream);
 		for (DateItem item : theItems.getItems())
 		{
-			if (item.getType() == DateItemType::OWNER_CHANGE)
+			if (item.getType() == DateItemType::OWNER_CHANGE) // something like this could be used in wars converting
 			{
 				ownershipHistory.push_back(std::make_pair(item.getDate(), item.getData()));
 			}

@@ -114,6 +114,66 @@ EU4::world::world(const string& EU4SaveFileName):
 			loadDiplomacy(diplomacyObject);
 		}
 	);
+	registerKeyword(std::regex("active_war"), [this](const std::string& unused, std::istream& theStream) {
+		//activeWar = std::make_unique<ActiveWar>(theStream);
+		std::string FirstAttackerTag = "";
+		std::string FirstDefenderTag = "";
+		std::string WarDate = "";
+		std::string WarName = "";
+		registerKeyword(std::regex("name"), [this](const std::string& unused, std::istream& theStream) {
+			commonItems::singleString warNameString(theStream);
+			//[&]WarName = warNameString.getString();
+		});
+		registerKeyword(std::regex("history"), [this](const std::string& unused, std::istream& theStream) {
+			registerKeyword(std::regex("\\d+\\.\\d+\\.\\d+"), [this](const std::string& dateString, std::istream& theStream) {
+				//[&]WarDate = dateString.getString();
+				registerKeyword(std::regex("add_attacker"), [this](const std::string& unused, std::istream & theStream) {
+					commonItems::singleString attackerEU4TagString(theStream);
+					std::string attackerEU4Tag = attackerEU4TagString.getString();
+					std::string attackerEU4TagWithoutQuotes = attackerEU4Tag.substr(1, attackerEU4Tag.size() - 1);
+					//if (FirstAttackerTag == "")
+					//{
+					//	FirstAttackerTag = attackerEU4TagWithoutQuotes;
+					//}
+				});
+				registerKeyword(std::regex("add_defender"), [this](const std::string& unused, std::istream & theStream) {
+					commonItems::singleString defenderEU4TagString(theStream);
+					std::string defenderEU4Tag = defenderEU4TagString.getString();
+					std::string defenderEU4TagWithoutQuotes = defenderEU4Tag.substr(1, defenderEU4Tag.size() - 1);
+					//if (FirstDefenderTag == "")
+					//{
+						///FirstDefenderTag = defenderEU4TagWithoutQuotes;
+						///[&](FirstDefenderTag) { defenderEU4TagWithoutQuotes = FirstDefenderTag; }(99);
+					//}
+				});
+			});
+		});
+		LOG(LogLevel::Info) << "Writing wars";
+		LOG(LogLevel::Info) << "name = " << WarName << "\n\n";
+		LOG(LogLevel::Info) << WarDate << " = {\n";
+		LOG(LogLevel::Info) << "\t" << "add_attacker = " << FirstAttackerTag << "\n";
+		LOG(LogLevel::Info) << "\t" << "add_defender = " << FirstDefenderTag << "\n";
+		LOG(LogLevel::Info) << "\t" << "war_goal = {\n";
+		LOG(LogLevel::Info) << "\t\t" << "casus_belli = conquest\n"; // temporarily hardcoded, make mappings
+		LOG(LogLevel::Info) << "\t\t" << "actor = " << FirstAttackerTag << "\n";
+		LOG(LogLevel::Info) << "\t\t" << "receiver = " << FirstDefenderTag << "\n";
+		LOG(LogLevel::Info) << "\t}\n";
+		LOG(LogLevel::Info) << "}";
+		ofstream V2WarFile;
+		//V2WarFile.open("Output\\" + theConfiguration.getOutputName() + "\\history\\wars\\TESTwar.txt");
+		V2WarFile.open("D:\\history\\wars\\TESTwar.txt");
+		V2WarFile << "name = " << WarName << "\n\n";
+		V2WarFile << WarDate << " = {\n";
+		V2WarFile << "\t" << "add_attacker = " << FirstAttackerTag << "\n";
+		V2WarFile << "\t" << "add_defender = " << FirstDefenderTag << "\n";
+		V2WarFile << "\t" << "war_goal = {\n";
+		V2WarFile << "\t\t" << "casus_belli = conquest\n"; // temporarily hardcoded, make mappings
+		V2WarFile << "\t\t" << "actor = " << FirstAttackerTag << "\n";
+		V2WarFile << "\t\t" << "receiver = " << FirstDefenderTag << "\n";
+		V2WarFile << "\t}\n";
+		V2WarFile << "}";
+		V2WarFile.close();
+	});
 	registerKeyword(std::regex("[A-Za-z0-9\\_]+"), commonItems::ignoreItem);
 
 	LOG(LogLevel::Info) << "* Importing EU4 save *";
