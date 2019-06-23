@@ -181,6 +181,9 @@
     <ClCompile Include="..\common_items\WinUtils.cpp" />
     <ClCompile Include="Source\Configuration.cpp" />
     <ClCompile Include="Source\EU4toV2Converter.cpp" />
+    <ClCompile Include="Source\EU4World\ActiveWar.cpp" />
+    <ClCompile Include="Source\EU4World\ActiveWarHistory.cpp" />
+    <ClCompile Include="Source\EU4World\WarDateItem.cpp" />
     <ClCompile Include="Source\EU4World\ColonialRegions.cpp" />
     <ClCompile Include="Source\EU4World\Continents.cpp" />
     <ClCompile Include="Source\EU4World\Countries.cpp" />
@@ -271,6 +274,9 @@
     <ClInclude Include="Source\Configuration.h" />
     <ClInclude Include="Source\CustomFlagMapper.h" />
     <ClInclude Include="Source\EU4ToVic2Converter.h" />
+    <ClInclude Include="Source\EU4World\ActiveWar.h" />
+    <ClInclude Include="Source\EU4World\ActiveWarHistory.h" />
+    <ClInclude Include="Source\EU4World\WarDateItem.h" />
     <ClInclude Include="Source\EU4World\ColonialRegions.h" />
     <ClInclude Include="Source\EU4World\Continents.h" />
     <ClInclude Include="Source\EU4World\Countries.h" />

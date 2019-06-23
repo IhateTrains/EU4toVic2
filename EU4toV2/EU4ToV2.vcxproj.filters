@@ -24,6 +24,15 @@
     <ClCompile Include="Source\Mappers\CK2TitleMapper.cpp">
       <Filter>Mappers</Filter>
     </ClCompile>
+	<ClCompile Include="Source\EU4World\ActiveWar.cpp">
+      <Filter>EU4World</Filter>
+    </ClCompile>
+	<ClCompile Include="Source\EU4World\ActiveWarHistory.cpp">
+      <Filter>EU4World</Filter>
+    </ClCompile>
+	<ClCompile Include="Source\EU4World\WarDateItem.cpp">
+      <Filter>EU4World</Filter>
+    </ClCompile>
     <ClCompile Include="Source\EU4World\ColonialRegions.cpp">
       <Filter>EU4World</Filter>
     </ClCompile>
@@ -279,6 +288,15 @@
     </ClInclude>
     <ClInclude Include="Source\Mappers\CK2TitleMapper.h">
       <Filter>Mappers</Filter>
+    </ClInclude>
+	<ClInclude Include="Source\EU4World\ActiveWar.h">
+      <Filter>EU4World</Filter>
+    </ClInclude>
+	<ClInclude Include="Source\EU4World\ActiveWarHistory.h">
+      <Filter>EU4World</Filter>
+    </ClInclude>
+	<ClInclude Include="Source\EU4World\WarDateItem.h">
+      <Filter>EU4World</Filter>
     </ClInclude>
     <ClInclude Include="Source\EU4World\ColonialRegions.h">
       <Filter>EU4World</Filter>
