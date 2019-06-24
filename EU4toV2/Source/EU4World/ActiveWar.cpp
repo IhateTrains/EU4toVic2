@@ -60,6 +60,11 @@ EU4::ActiveWar::ActiveWar(const std::string& unused, std::istream& theStream)
 			defenders.insert(defenderString);
 		}
 	});
+	registerKeyword(std::regex("stalled_years"), [this](const std::string& unused, std::istream& theStream) {
+
+		commonItems::singleString stalledyearsvalue(theStream); // unused, just for debug
+		LOG(LogLevel::Error) << "stalled_years is read";// debug
+	});
 	
 	registerKeyword(std::regex("[a-zA-Z0-9_]+"), commonItems::ignoreItem);
 	//registerKeyword(std::regex("\\d+\\.\\d+\\.\\d+"), commonItems::ignoreItem);
