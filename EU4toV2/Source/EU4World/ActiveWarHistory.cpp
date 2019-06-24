@@ -38,7 +38,7 @@ const date FUTURE_DATE("2000.1.1");
 
 EU4::ActiveWarHistory::ActiveWarHistory(std::istream& theStream)
 {
-	LOG(LogLevel::Error) << "blabla reading war history"; // debug
+	LOG(LogLevel::Error) << "Reading war history"; // debug
 	
 	registerKeyword(std::regex("\\d+\\.\\d+\\.\\d+"), [this](const std::string& dateString, std::istream& theStream) { // unfinished and unneded
 		WarDateItems theItems(dateString, theStream);
