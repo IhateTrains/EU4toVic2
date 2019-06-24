@@ -140,13 +140,7 @@ EU4::world::world(const string& EU4SaveFileName) :
 		ActiveWar newActiveWar(unused, theStream);
 		LOG(LogLevel::Error) << "* Created newActiveWar *"; // debug
 		EU4::ActiveWars::activeWars.insert(std::make_pair(ActiveWarIterator, std::move(newActiveWar)));
-
 		LOG(LogLevel::Error) << "* Inserted war *"; // debug
-	});
-	registerKeyword(std::regex("active_war"), [this](const std::string& unused, std::istream& theStream) {
-		ActiveWarIterator++;
-		ActiveWar newActiveWar(unused, theStream);
-		EU4::ActiveWars::activeWars.insert(std::make_pair(ActiveWarIterator, std::move(newActiveWar)));
 	});
 	registerKeyword(std::regex("[A-Za-z0-9\\_]+"), commonItems::ignoreItem);
 
