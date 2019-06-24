@@ -29,23 +29,29 @@ EU4::WarDateItem::WarDateItem(const std::string& dateString, const std::string& 
 {
 	theDate = date(dateString);
 
-	if (typeString == "owner")
+	if (typeString == "add_attacker")
 	{
-		type = WarDateItemType::OWNER_CHANGE;
-		commonItems::singleString ownerString(theStream);
-		data = ownerString.getString();
+		type = WarDateItemType::ADD_ATTACKER;
+		commonItems::singleString addAttackerString(theStream);
+		data = addAttackerString.getString();
 	}
-	else if (typeString == "culture")
+	else if (typeString == "add_defender")
 	{
-		type = WarDateItemType::CULTURE_CHANGE;
-		commonItems::singleString cultureString(theStream);
-		data = cultureString.getString();
+		type = WarDateItemType::ADD_DEFENDER;
+		commonItems::singleString addDefenderString(theStream);
+		data = addDefenderString.getString();
 	}
-	else if (typeString == "religion")
+	else if (typeString == "remove_attacker")
 	{
-		type = WarDateItemType::RELIGION_CHANGE;
-		commonItems::singleString religionString(theStream);
-		data = religionString.getString();
+		type = WarDateItemType::REMOVE_ATTACKER;
+		commonItems::singleString removeAttackerString(theStream);
+		data = removeAttackerString.getString();
+	}
+	else if (typeString == "remove_defender")
+	{
+		type = WarDateItemType::REMOVE_DEFENDER;
+		commonItems::singleString removeDefenderString(theStream);
+		data = removeDefenderString.getString();
 	}
 	else
 	{

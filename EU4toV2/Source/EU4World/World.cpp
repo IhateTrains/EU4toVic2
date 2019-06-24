@@ -30,6 +30,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #include "EU4Localisation.h"
 #include "Provinces/EU4Province.h"
 #include "Regions/Areas.h"
+#include "ActiveWar.h"
 #include "../Configuration.h"
 #include "../Mappers/ProvinceMappings/ProvinceMapper.h"
 #include "../Mappers/ReligionMapper.h"
@@ -46,7 +47,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
 
 
-EU4::world::world(const string& EU4SaveFileName):
+EU4::world::world(const string& EU4SaveFileName) :
 	theCountries()
 {
 	registerKeyword(std::regex("EU4txt"), [this](const std::string& unused, std::istream& theStream){});
@@ -135,6 +136,9 @@ EU4::world::world(const string& EU4SaveFileName):
 		V2WarFile << "}";
 		V2WarFile.close();
 		*/
+		ActiveWarIterator++;
+		ActiveWar newActiveWar(unused, theStream);
+		activeWars.insert(std::make_pair(ActiveWarIterator, std::move(newActiveWar)));
 	});
 	registerKeyword(std::regex("[A-Za-z0-9\\_]+"), commonItems::ignoreItem);
 

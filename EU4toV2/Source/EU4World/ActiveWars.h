@@ -20,44 +20,40 @@ THE SOFTWARE. */
 
 
 
-#ifndef ACTIVEWAR_HISTORY_H_
-#define ACTIVEWAR_HISTORY_H_
+#ifndef ACTIVEWARS_H_
+#define ACTIVEWARS_H_
 
 
 
-#include "Date.h"
+#include "ActiveWar.h"
+#include "../Mappers/ProvinceMappings/ProvinceMapper.h"
 #include "newParser.h"
 #include <map>
 #include <optional>
-#include <vector>
-#include <string>
 
 
 
 namespace EU4
 {
 
-class ActiveWarHistory: commonItems::parser
+class ActiveWars: commonItems::parser
 {
 	public:
-		ActiveWarHistory(std::istream& theStream);
+		//Provinces(std::istream& theStream);
 
-		//std::optional<date> getFirstOwnedDate() const;
+		//Province& getProvince(int provinceNumber);
 
-		//std::vector<PopRatio> getPopRatios() const { return popRatios; }
+		//auto& getAllProvinces() { return provinces; }
+
+		//void checkAllProvincesMapped(const mappers::ProvinceMapper& provinceMapper) const;
 
 	private:
-		//void buildPopRatios();
+		std::map<int, ActiveWar> activeWars;
 
-		//std::vector<std::pair<date, std::string>> ownershipHistory;
-		//std::vector<std::pair<date, std::string>> religionHistory;
-		//std::vector<std::pair<date, std::string>> cultureHistory;
-
-		//std::vector<PopRatio> popRatios;
 };
 
 }
 
 
 
-#endif // ACTIVEWAR_HISTORY_H_
+#endif // ACTIVEWARS_H_

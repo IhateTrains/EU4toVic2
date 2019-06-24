@@ -35,44 +35,24 @@ EU4::ActiveWar::ActiveWar(const std::string& unused, std::istream& theStream)
 {
 	registerKeyword(std::regex("name"), [this](const std::string& unused, std::istream& theStream) {
 		commonItems::singleString warNameString(theStream);
-		//[&]WarName = warNameString.getString();
 	});
-	registerKeyword(std::regex("history"), [this](const std::string& unused, std::istream& theStream) {
+	registerKeyword(std::regex("history"), [this](const std::string& unused, std::istream& theStream) { // currently unused data
 		activeWarHistory = std::make_unique<ActiveWarHistory>(theStream);
 	});
-	registerKeyword(std::regex("history"), [this](const std::string& unused, std::istream& theStream) {
-		registerKeyword(std::regex("\\d+\\.\\d+\\.\\d+"), [this](const std::string& dateString, std::istream& theStream) {
-			//[&]WarDate = dateString.getString();
-			registerKeyword(std::regex("add_attacker"), [this](const std::string& unused, std::istream & theStream) {
-				commonItems::singleString attackerEU4TagString(theStream);
-				std::string attackerEU4Tag = attackerEU4TagString.getString();
-				std::string attackerEU4TagWithoutQuotes = attackerEU4Tag.substr(1, attackerEU4Tag.size() - 1);
-				//if (FirstAttackerTag == "")
-				//{
-				//	FirstAttackerTag = attackerEU4TagWithoutQuotes;
-				//}
-			});
-			registerKeyword(std::regex("add_defender"), [this](const std::string& unused, std::istream & theStream) {
-				commonItems::singleString defenderEU4TagString(theStream);
-				std::string defenderEU4Tag = defenderEU4TagString.getString();
-				std::string defenderEU4TagWithoutQuotes = defenderEU4Tag.substr(1, defenderEU4Tag.size() - 1);
-				//if (FirstDefenderTag == "")
-				//{
-					///FirstDefenderTag = defenderEU4TagWithoutQuotes;
-					///[&](FirstDefenderTag) { defenderEU4TagWithoutQuotes = FirstDefenderTag; }(99);
-				//}
-			});
-		});
-	});
-	/*
-	registerKeyword(std::regex("cores"), [this](const std::string& unused, std::istream& theStream) {
-		commonItems::stringList coresStrings(theStream);
-		for (auto coreString : coresStrings.getStrings())
+	registerKeyword(std::regex("attackers"), [this](const std::string& unused, std::istream& theStream) {
+		commonItems::stringList attackersStrings(theStream);
+		for (auto attackerString : attackersStrings.getStrings())
 		{
-			cores.insert(coreString);
+			attackers.insert(attackerString);
 		}
 	});
-	*/
+	registerKeyword(std::regex("defenders"), [this](const std::string& unused, std::istream& theStream) {
+		commonItems::stringList defendersStrings(theStream);
+		for (auto defenderString : defendersStrings.getStrings())
+		{
+			defenders.insert(defenderString);
+		}
+	});
 	
 	registerKeyword(std::regex("[a-zA-Z0-9_]+"), commonItems::ignoreItem);
 

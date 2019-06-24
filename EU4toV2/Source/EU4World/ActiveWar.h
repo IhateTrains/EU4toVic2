@@ -32,6 +32,7 @@ THE SOFTWARE. */
 #include <vector>
 #include <map>
 #include <memory>
+#include <set>
 
 
 // based on EU4Province
@@ -53,17 +54,16 @@ class ActiveWar: commonItems::parser
 
 		//int getNum() const { return num; }
 		std::string getName() const { return name; }
-		std::string getOwnerString() const { return ownerString; }
 		std::string getControllerString() const { return controllerString; }
-		//std::set<std::string> getCores() const { return cores; }
-
+		std::set<std::string> getAttackers() const { return attackers; }
+		std::set<std::string> getDefenders() const { return defenders; }
 
 	private:
 
 		std::string	name;
-		std::string ownerString;
 		std::string controllerString;
-		//std::set<std::string> cores;
+		std::set<std::string> attackers;
+		std::set<std::string> defenders;
 
 		std::unique_ptr<EU4::ActiveWarHistory> activeWarHistory;
 };

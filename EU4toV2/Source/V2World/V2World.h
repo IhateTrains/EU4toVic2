@@ -31,6 +31,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #include "V2Factory.h"
 #include "V2Party.h"
 #include "V2Province.h"
+#include "V2War.h"
 #include "../EU4World/EU4Army.h"
 #include "../EU4World/Provinces/EU4Province.h"
 #include "../EU4World/Provinces/PopRatio.h"
@@ -112,6 +113,7 @@ class V2World
 		void setupPops(const EU4::world& sourceWorld);
 		void addUnions();
 		void convertArmies(const EU4::world& sourceWorld);
+		void convertWars(const EU4::world& sourceWorld);
 
 		void output() const;
 		void createModFile() const;
@@ -122,6 +124,8 @@ class V2World
 		map<string, V2Country*> potentialCountries;
 		map<string, V2Country*> dynamicCountries;
 		V2Diplomacy diplomacy;
+		map<int, V2War*> V2activeWars;
+		map<int, EU4::ActiveWar*> activeWars;
 		map<int, set<string>> colonies;
 		map<string, list<int>>	popRegions;
 		std::unique_ptr<Vic2::TechSchools> techSchools;

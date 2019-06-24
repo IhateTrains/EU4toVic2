@@ -20,44 +20,46 @@ THE SOFTWARE. */
 
 
 
-#ifndef ACTIVEWAR_HISTORY_H_
-#define ACTIVEWAR_HISTORY_H_
-
-
-
-#include "Date.h"
-#include "newParser.h"
-#include <map>
-#include <optional>
-#include <vector>
+#include "Provinces.h"
+#include "Log.h"
+#include <stdexcept>
 #include <string>
 
 
 
-namespace EU4
+EU4::Provinces::Provinces(std::istream& theStream)
 {
-
-class ActiveWarHistory: commonItems::parser
-{
-	public:
-		ActiveWarHistory(std::istream& theStream);
-
-		//std::optional<date> getFirstOwnedDate() const;
-
-		//std::vector<PopRatio> getPopRatios() const { return popRatios; }
-
-	private:
-		//void buildPopRatios();
-
-		//std::vector<std::pair<date, std::string>> ownershipHistory;
-		//std::vector<std::pair<date, std::string>> religionHistory;
-		//std::vector<std::pair<date, std::string>> cultureHistory;
-
-		//std::vector<PopRatio> popRatios;
-};
-
+	registerKeyword(std::regex("-[0-9]+"), [this](const std::string& numberString, std::istream& theStream) {
+		Province newProvince(numberString, theStream);
+		provinces.insert(std::make_pair(newProvince.getNum(), std::move(newProvince)));
+	});
+	parseStream(theStream);
 }
 
 
+EU4::Province& EU4::Provinces::getProvince(int provinceNumber)
+{
+	std::map<int, Province>::iterator province = provinces.find(provinceNumber);
+	if (province == provinces.end())
+	{
+		std::range_error exception(std::string("Old province ") + std::to_string(provinceNumber) + std::string(" does not exist (bad mapping?)"));
+		throw exception;
+	}
+	else
+	{
+		return province->second;
+	}
+}
 
-#endif // ACTIVEWAR_HISTORY_H_
+
+void EU4::Provinces::checkAllProvincesMapped(const mappers::ProvinceMapper& provinceMapper) const
+{
+	for (auto& province: provinces)
+	{
+		auto Vic2Provinces = provinceMapper.getVic2ProvinceNumbers(province.first);
+		if (Vic2Provinces.size() == 0)
+		{
+			LOG(LogLevel::Warning) << "No mapping for province " << province.first;
+		}
+	}
+}

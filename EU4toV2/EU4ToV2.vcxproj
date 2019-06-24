@@ -256,6 +256,7 @@
     <ClCompile Include="Source\V2World\V2Relations.cpp" />
     <ClCompile Include="Source\V2World\V2State.cpp" />
     <ClCompile Include="Source\V2World\V2TechSchools.cpp" />
+    <ClCompile Include="Source\V2World\V2War.cpp" />
     <ClCompile Include="Source\V2World\V2World.cpp" />
     <ClCompile Include="Source\V2World\Vic2TechSchool.cpp" />
   </ItemGroup>
@@ -345,6 +346,7 @@
     <ClInclude Include="Source\V2World\V2Relations.h" />
     <ClInclude Include="Source\V2World\V2State.h" />
     <ClInclude Include="Source\V2World\V2TechSchools.h" />
+    <ClCompile Include="Source\V2World\V2War.h" />
     <ClInclude Include="Source\V2World\V2World.h" />
     <ClInclude Include="Source\V2World\Vic2CultureUnion.h" />
     <ClInclude Include="Source\V2World\Vic2CultureUnionMapper.h" />

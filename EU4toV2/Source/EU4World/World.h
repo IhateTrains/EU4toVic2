@@ -30,6 +30,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #include "EU4Diplomacy.h"
 #include "EU4Version.h"
 #include "Provinces/Provinces.h"
+#include "ActiveWar.h"
 #include "Regions/Regions.h"
 #include "Religions/Religions.h"
 #include "../Mappers/CultureMapper.h"
@@ -46,6 +47,7 @@ namespace EU4
 
 class Country;
 class Province;
+class ActiveWar;
 
 
 class world: private commonItems::parser
@@ -67,6 +69,7 @@ class world: private commonItems::parser
 		const Religions& getAllReligions() const { return theReligions; }
 
 		bool isRandomWorld() const;
+		int ActiveWarIterator = 0;
 
 	private:
 		void verifySave(const string& EU4SaveFileName);
@@ -126,6 +129,8 @@ class world: private commonItems::parser
 		std::string revolutionTargetString;
 
 		Religions theReligions;
+
+		std::map<int, ActiveWar> activeWars;
 };
 
 }

@@ -85,6 +85,7 @@ V2World::V2World(const EU4::world& sourceWorld)
 	convertCountries(sourceWorld);
 	convertProvinces(sourceWorld);
 	convertDiplomacy(sourceWorld);
+	convertWars(sourceWorld);
 	setupColonies();
 	setupStates();
 	convertUncivReforms(sourceWorld);
@@ -805,7 +806,7 @@ void V2World::convertProvinces(const EU4::world& sourceWorld)
 							continue;
 						}
 
-						const std::string& coreV2Tag = mappers::CountryMappings::getVic2Tag(oldCore);
+						const std::string& coreV2Tag = mappers::CountryMappings::getVic2Tag(oldCore); // TODO: LOOK AT ME!!!!!!!!!!!!!!!!!!!!!!!!!!
 						if (!coreV2Tag.empty())
 						{
 							Vic2Province.second->addCore(coreV2Tag);
@@ -1786,6 +1787,24 @@ void V2World::convertArmies(const EU4::world& sourceWorld)
 	for (map<string, V2Country*>::iterator itr = countries.begin(); itr != countries.end(); ++itr)
 	{
 		itr->second->convertArmies(leaderIDMap, cost_per_regiment, provinces, port_whitelist, *provinceMapper);
+	}
+}
+void V2World::convertWars(const EU4::world& sourceWorld)
+{
+	LOG(LogLevel::Info) << "Converting wars";
+
+	for (auto Vic2War : activeWars)
+	{
+		//for (vector<const EU4::ActiveWar*>::iterator vitr = mitr->second.activeWars.begin(); vitr != mitr->second.activeWars.end(); ++vitr)
+		auto oldAttackers = Vic2War.getAttackers(); // maybe something different than Vic2War?
+		for (auto oldAttacker : oldAttackers)
+		{
+			const std::string& attackerV2Tag = mappers::CountryMappings::getVic2Tag(oldAttacker); // TODO: LOOK AT ME!!!!!!!!!!!!!!!!!!!!!!!!!!
+			if (!attackerV2Tag.empty())
+			{
+				Vic2War.second->addAttacker(attackerV2Tag);
+			}
+		}
 	}
 }
 

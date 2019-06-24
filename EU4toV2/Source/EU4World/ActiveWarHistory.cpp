@@ -37,165 +37,31 @@ const date FUTURE_DATE("2000.1.1");
 
 EU4::ActiveWarHistory::ActiveWarHistory(std::istream& theStream)
 {
-	registerKeyword(std::regex("owner"), [this](const std::string& unused, std::istream & theStream) {
-		commonItems::singleString ownerString(theStream);
-		ownershipHistory.push_back(std::make_pair(STARTING_DATE, ownerString.getString()));
-	});
-	registerKeyword(std::regex("culture"), [this](const std::string& unused, std::istream & theStream) {
-		commonItems::singleString cultureString(theStream);
-		cultureHistory.push_back(std::make_pair(STARTING_DATE, cultureString.getString()));
-	});
-	registerKeyword(std::regex("religion"), [this](const std::string& unused, std::istream & theStream) {
-		commonItems::singleString religionString(theStream);
-		religionHistory.push_back(std::make_pair(STARTING_DATE, religionString.getString()));
-	});
-	registerKeyword(std::regex("\\d+\\.\\d+\\.\\d+"), [this](const std::string& dateString, std::istream& theStream) {
-		DateItems theItems(dateString, theStream);
-		for (DateItem item : theItems.getItems())
+	/*
+	registerKeyword(std::regex("\\d+\\.\\d+\\.\\d+"), [this](const std::string& dateString, std::istream& theStream) { // unfinished and unneded
+		WarDateItems theItems(dateString, theStream);
+		for (WarDateItem item : theItems.getItems())
 		{
-			if (item.getType() == DateItemType::OWNER_CHANGE) // something like this could be used in wars converting
+			if (item.getType() == WarDateItemType::ADD_ATTACKER)
 			{
 				ownershipHistory.push_back(std::make_pair(item.getDate(), item.getData()));
 			}
-			else if (item.getType() == DateItemType::CULTURE_CHANGE)
+			else if (item.getType() == WarDateItemType::ADD_DEFENDER)
 			{
 				cultureHistory.push_back(std::make_pair(item.getDate(), item.getData()));
 			}
-			else if (item.getType() == DateItemType::RELIGION_CHANGE)
+			else if (item.getType() == WarDateItemType::REMOVE_ATTACKER)
 			{
-				religionHistory.push_back(std::make_pair(item.getDate(), item.getData()));
+				// what to do???
+			}
+			else if (item.getType() == WarDateItemType::REMOVE_DEFENDER)
+			{
+				// what to do???
 			}
 		}
 	});
+	*/
 	registerKeyword(std::regex("[a-zA-Z0-9_]+"), commonItems::ignoreItem);
 
 	parseStream(theStream);
-
-	//buildPopRatios();
 }
-
-
-std::optional<date> EU4::ActiveWarHistory::getFirstOwnedDate() const
-{
-	if (ownershipHistory.size() > 0)
-	{
-		return ownershipHistory[0].first;
-	}
-	else
-	{
-		return {};
-	}
-}
-
-
-bool EU4::ActiveWarHistory::hasOriginalCulture() const
-{
-	if ((cultureHistory.size() > 1) && (cultureHistory[0].second != cultureHistory[cultureHistory.size() - 1].second))
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
-}
-
-
-
-
-/*
-void EU4::ProvinceHistory::buildPopRatios()
-{
-	date endDate = theConfiguration.getLastEU4Date();
-	if (endDate < ENDING_DATE)
-	{
-		endDate = ENDING_DATE;
-	}
-
-	std::string startingCulture;
-	std::vector<std::pair<date, std::string>>::iterator cultureEvent = cultureHistory.begin();
-	if (cultureEvent != cultureHistory.end())
-	{
-		startingCulture = cultureEvent->second;
-		++cultureEvent;
-	}
-
-	std::string startingReligion;
-	std::vector<std::pair<date, std::string>>::iterator religionEvent = religionHistory.begin();
-	if (religionEvent != religionHistory.end())
-	{
-		startingReligion = religionEvent->second;
-		++religionEvent;
-	}
-
-	EU4::PopRatio currentRatio(startingCulture, startingReligion);
-	date cultureEventDate;
-	date religionEventDate;
-	date lastLoopDate = STARTING_DATE;
-	while (cultureEvent != cultureHistory.end() || religionEvent != religionHistory.end())
-	{
-		if (cultureEvent == cultureHistory.end())
-		{
-			cultureEventDate = FUTURE_DATE;
-		}
-		else
-		{
-			cultureEventDate = cultureEvent->first;
-		}
-
-		if (religionEvent == religionHistory.end())
-		{
-			religionEventDate = FUTURE_DATE;
-		}
-		else
-		{
-			religionEventDate = religionEvent->first;
-		}
-
-		if (cultureEventDate < religionEventDate)
-		{
-			decayPopRatios(lastLoopDate, cultureEventDate, currentRatio);
-			popRatios.push_back(currentRatio);
-			for (auto& itr: popRatios)
-			{
-				itr.convertFrom();
-			}
-			currentRatio.convertToCulture(cultureEvent->second);
-			lastLoopDate = cultureEventDate;
-			++cultureEvent;
-		}
-		else if (cultureEventDate == religionEventDate)
-		{
-			// culture and religion change on the same day;
-			decayPopRatios(lastLoopDate, cultureEventDate, currentRatio);
-			popRatios.push_back(currentRatio);
-			for (auto& itr: popRatios)
-			{
-				itr.convertFrom();
-			}
-			currentRatio.convertTo(cultureEvent->second, religionEvent->second);
-			lastLoopDate = cultureEventDate;
-			++cultureEvent;
-			++religionEvent;
-		}
-		else if (religionEventDate < cultureEventDate)
-		{
-			decayPopRatios(lastLoopDate, cultureEventDate, currentRatio);
-			popRatios.push_back(currentRatio);
-			for (auto& itr: popRatios)
-			{
-				itr.convertFrom();
-			}
-			currentRatio.convertToReligion(religionEvent->second);
-			lastLoopDate = religionEventDate;
-			++religionEvent;
-		}
-	}
-	decayPopRatios(lastLoopDate, endDate, currentRatio);
-
-	if ((currentRatio.getCulture() != "") || (currentRatio.getReligion() != ""))
-	{
-		popRatios.push_back(currentRatio);
-	}
-}
-*/
