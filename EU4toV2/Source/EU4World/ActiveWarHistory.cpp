@@ -22,6 +22,7 @@ THE SOFTWARE. */
 
 #include "ActiveWarHistory.h"
 #include "WarDateItem.h"
+#include "WarDateItems.h"
 #include "Provinces/DateItems.h"
 #include "../Configuration.h"
 #include "Log.h"
@@ -37,30 +38,31 @@ const date FUTURE_DATE("2000.1.1");
 
 EU4::ActiveWarHistory::ActiveWarHistory(std::istream& theStream)
 {
-	/*
+	LOG(LogLevel::Error) << "blabla reading war history"; // debug
+	
 	registerKeyword(std::regex("\\d+\\.\\d+\\.\\d+"), [this](const std::string& dateString, std::istream& theStream) { // unfinished and unneded
 		WarDateItems theItems(dateString, theStream);
 		for (WarDateItem item : theItems.getItems())
 		{
 			if (item.getType() == WarDateItemType::ADD_ATTACKER)
 			{
-				ownershipHistory.push_back(std::make_pair(item.getDate(), item.getData()));
+				LOG(LogLevel::Error) << "ADD_ATTACKER";// debug
 			}
 			else if (item.getType() == WarDateItemType::ADD_DEFENDER)
 			{
-				cultureHistory.push_back(std::make_pair(item.getDate(), item.getData()));
+				LOG(LogLevel::Error) << "ADD_DEFENDER";// debug
 			}
 			else if (item.getType() == WarDateItemType::REMOVE_ATTACKER)
 			{
-				// what to do???
+				LOG(LogLevel::Error) << "REMOVE_ATTACKER";// debug
 			}
 			else if (item.getType() == WarDateItemType::REMOVE_DEFENDER)
 			{
-				// what to do???
+				LOG(LogLevel::Error) << "REMOVE_DEFENDER";// debug
 			}
 		}
 	});
-	*/
+	
 	registerKeyword(std::regex("[a-zA-Z0-9_]+"), commonItems::ignoreItem);
 
 	parseStream(theStream);

@@ -20,41 +20,16 @@ THE SOFTWARE. */
 
 
 
-#include "WarDateItem.h"
-#include "ParserHelpers.h"
+#include "WarDateItems.h"
 
 
 
-EU4::WarDateItem::WarDateItem(const std::string& dateString, const std::string& typeString, std::istream& theStream)
+EU4::WarDateItems::WarDateItems(const std::string& dateString, std::istream& theStream)
 {
-	theDate = date(dateString);
+	registerKeyword(std::regex("[a-zA-Z0-9_]+"), [this, dateString](const std::string& typeString, std::istream& theStream) {
+		WarDateItem newItem(dateString, typeString, theStream);
+		items.push_back(newItem);
+	});
 
-	if (typeString == "add_attacker")
-	{
-		type = WarDateItemType::ADD_ATTACKER;
-		commonItems::singleString addAttackerString(theStream);
-		data = addAttackerString.getString();
-	}
-	else if (typeString == "add_defender")
-	{
-		type = WarDateItemType::ADD_DEFENDER;
-		commonItems::singleString addDefenderString(theStream);
-		data = addDefenderString.getString();
-	}
-	else if (typeString == "rem_attacker")
-	{
-		type = WarDateItemType::REMOVE_ATTACKER;
-		commonItems::singleString removeAttackerString(theStream);
-		data = removeAttackerString.getString();
-	}
-	else if (typeString == "rem_defender")
-	{
-		type = WarDateItemType::REMOVE_DEFENDER;
-		commonItems::singleString removeDefenderString(theStream);
-		data = removeDefenderString.getString();
-	}
-	else
-	{
-		commonItems::ignoreItem(typeString, theStream);
-	}
+	parseStream(theStream);
 }

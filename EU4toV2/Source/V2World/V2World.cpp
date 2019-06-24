@@ -1791,17 +1791,20 @@ void V2World::convertArmies(const EU4::world& sourceWorld)
 		itr->second->convertArmies(leaderIDMap, cost_per_regiment, provinces, port_whitelist, *provinceMapper);
 	}
 }
+
 void V2World::convertWars(const EU4::world& sourceWorld)
 {
 	LOG(LogLevel::Info) << "Converting wars";
 
 	//for (auto Vic2War : activeWars)
 	//{
-		const EU4::ActiveWar& activeWar = sourceWorld.getActiveWar(1);
+		const EU4::ActiveWar& activeWar = sourceWorld.getActiveWar(0);
+		LOG(LogLevel::Error) << "Converting first war"; // debug
 		auto oldAttackers = activeWar.getAttackers();
 		for (auto oldAttacker : oldAttackers)
 		{
 			const std::string& attackerV2Tag = mappers::CountryMappings::getVic2Tag(oldAttacker); // TODO: LOOK AT ME!!!!!!!!!!!!!!!!!!!!!!!!!!
+			LOG(LogLevel::Error) << attackerV2Tag; // debug
 			if (!attackerV2Tag.empty())
 			{
 				//Vic2War.second->addAttacker(attackerV2Tag);

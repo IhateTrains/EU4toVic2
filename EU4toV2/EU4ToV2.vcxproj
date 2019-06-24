@@ -185,6 +185,7 @@
 	<ClCompile Include="Source\EU4World\ActiveWars.cpp" />
     <ClCompile Include="Source\EU4World\ActiveWarHistory.cpp" />
     <ClCompile Include="Source\EU4World\WarDateItem.cpp" />
+    <ClCompile Include="Source\EU4World\WarDateItems.cpp" />
     <ClCompile Include="Source\EU4World\ColonialRegions.cpp" />
     <ClCompile Include="Source\EU4World\Continents.cpp" />
     <ClCompile Include="Source\EU4World\Countries.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="Source\EU4World\ActiveWars.h" />
     <ClInclude Include="Source\EU4World\ActiveWarHistory.h" />
     <ClInclude Include="Source\EU4World\WarDateItem.h" />
+    <ClInclude Include="Source\EU4World\WarDateItems.h" />
     <ClInclude Include="Source\EU4World\ColonialRegions.h" />
     <ClInclude Include="Source\EU4World\Continents.h" />
     <ClInclude Include="Source\EU4World\Countries.h" />

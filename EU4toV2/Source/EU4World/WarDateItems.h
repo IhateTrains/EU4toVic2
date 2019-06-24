@@ -20,41 +20,34 @@ THE SOFTWARE. */
 
 
 
+#ifndef WAR_DATE_ITEMS_H_
+#define WAR_DATE_ITEMS_H_
+
+
+
 #include "WarDateItem.h"
-#include "ParserHelpers.h"
+#include "Date.h"
+#include "newParser.h"
+#include <vector>
 
 
 
-EU4::WarDateItem::WarDateItem(const std::string& dateString, const std::string& typeString, std::istream& theStream)
+namespace EU4
 {
-	theDate = date(dateString);
 
-	if (typeString == "add_attacker")
-	{
-		type = WarDateItemType::ADD_ATTACKER;
-		commonItems::singleString addAttackerString(theStream);
-		data = addAttackerString.getString();
-	}
-	else if (typeString == "add_defender")
-	{
-		type = WarDateItemType::ADD_DEFENDER;
-		commonItems::singleString addDefenderString(theStream);
-		data = addDefenderString.getString();
-	}
-	else if (typeString == "rem_attacker")
-	{
-		type = WarDateItemType::REMOVE_ATTACKER;
-		commonItems::singleString removeAttackerString(theStream);
-		data = removeAttackerString.getString();
-	}
-	else if (typeString == "rem_defender")
-	{
-		type = WarDateItemType::REMOVE_DEFENDER;
-		commonItems::singleString removeDefenderString(theStream);
-		data = removeDefenderString.getString();
-	}
-	else
-	{
-		commonItems::ignoreItem(typeString, theStream);
-	}
+class WarDateItems: commonItems::parser
+{
+	public:
+		WarDateItems(const std::string& dateString, std::istream& theStream);
+
+		std::vector<WarDateItem> getItems() const { return items;  }
+
+	private:
+		std::vector<WarDateItem> items;
+};
+
 }
+
+
+
+#endif // WAR_DATE_ITEMS_H_

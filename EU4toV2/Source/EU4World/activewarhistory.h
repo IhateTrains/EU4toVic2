@@ -52,8 +52,6 @@ class ActiveWarHistory: commonItems::parser
 		//std::vector<std::pair<date, std::string>> ownershipHistory;
 		//std::vector<std::pair<date, std::string>> religionHistory;
 		//std::vector<std::pair<date, std::string>> cultureHistory;
-
-		//std::vector<PopRatio> popRatios;
 };
 
 }

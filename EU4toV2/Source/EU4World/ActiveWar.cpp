@@ -35,12 +35,18 @@ EU4::ActiveWar::ActiveWar(const std::string& unused, std::istream& theStream)
 {
 	registerKeyword(std::regex("name"), [this](const std::string& unused, std::istream& theStream) {
 		commonItems::singleString warNameString(theStream);
+		LOG(LogLevel::Error) << warNameString.getString();
 	});
+	
+	
 	registerKeyword(std::regex("history"), [this](const std::string& unused, std::istream& theStream) { // currently unused data
 		activeWarHistory = std::make_unique<ActiveWarHistory>(theStream);
 	});
+	
+	
 	registerKeyword(std::regex("attackers"), [this](const std::string& unused, std::istream& theStream) {
 		commonItems::stringList attackersStrings(theStream);
+		LOG(LogLevel::Error) << "Reading attackers";// debug
 		for (auto attackerString : attackersStrings.getStrings())
 		{
 			attackers.insert(attackerString);
@@ -48,6 +54,7 @@ EU4::ActiveWar::ActiveWar(const std::string& unused, std::istream& theStream)
 	});
 	registerKeyword(std::regex("defenders"), [this](const std::string& unused, std::istream& theStream) {
 		commonItems::stringList defendersStrings(theStream);
+		LOG(LogLevel::Error) << "Reading defenders";// debug
 		for (auto defenderString : defendersStrings.getStrings())
 		{
 			defenders.insert(defenderString);
@@ -55,6 +62,7 @@ EU4::ActiveWar::ActiveWar(const std::string& unused, std::istream& theStream)
 	});
 	
 	registerKeyword(std::regex("[a-zA-Z0-9_]+"), commonItems::ignoreItem);
+	//registerKeyword(std::regex("\\d+\\.\\d+\\.\\d+"), commonItems::ignoreItem);
 
 	parseStream(theStream);
 }

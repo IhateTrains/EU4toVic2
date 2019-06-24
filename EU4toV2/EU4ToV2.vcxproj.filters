@@ -36,6 +36,9 @@
 	<ClCompile Include="Source\EU4World\WarDateItem.cpp">
       <Filter>EU4World</Filter>
     </ClCompile>
+	<ClCompile Include="Source\EU4World\WarDateItems.cpp">
+      <Filter>EU4World</Filter>
+    </ClCompile>
     <ClCompile Include="Source\EU4World\ColonialRegions.cpp">
       <Filter>EU4World</Filter>
     </ClCompile>
@@ -311,6 +314,9 @@
       <Filter>EU4World</Filter>
     </ClInclude>
 	<ClInclude Include="Source\EU4World\WarDateItem.h">
+      <Filter>EU4World</Filter>
+    </ClInclude>
+	<ClInclude Include="Source\EU4World\WarDateItems.h">
       <Filter>EU4World</Filter>
     </ClInclude>
     <ClInclude Include="Source\EU4World\ColonialRegions.h">
