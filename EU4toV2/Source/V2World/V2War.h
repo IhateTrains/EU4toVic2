@@ -36,11 +36,6 @@ class V2War
 	public:
 		V2War(string _filename);
 		void output() const;
-		void convertFromOldProvince(
-			const EU4::Religions& allReligions,
-			const EU4::ActiveWar* oldProvince,
-			const std::map<std::string, std::shared_ptr<EU4::Country>>& theEU4Countries
-		);
 
 		void addAttacker(string);
 		void addDefender(string);

@@ -39,21 +39,20 @@ namespace EU4
 class ActiveWars: commonItems::parser
 {
 	public:
-		//Provinces(std::istream& theStream);
+		//ActiveWars(std::istream& theStream);
 
-		//Province& getProvince(int provinceNumber);
+		ActiveWar& getActiveWar(int activeWarNumber);
 
-		//auto& getAllProvinces() { return provinces; }
+		//auto& getAllActiveWars() { return activeWars; }
 
-		//void checkAllProvincesMapped(const mappers::ProvinceMapper& provinceMapper) const;
+
+		std::map<int, ActiveWar> activeWars;
 
 	private:
-		std::map<int, ActiveWar> activeWars;
 
 };
 
 }
-
 
 
 #endif // ACTIVEWARS_H_

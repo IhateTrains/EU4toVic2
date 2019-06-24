@@ -54,7 +54,7 @@ class ActiveWar: commonItems::parser
 
 		//int getNum() const { return num; }
 		std::string getName() const { return name; }
-		std::string getControllerString() const { return controllerString; }
+		//std::string getControllerString() const { return controllerString; }
 		std::set<std::string> getAttackers() const { return attackers; }
 		std::set<std::string> getDefenders() const { return defenders; }
 

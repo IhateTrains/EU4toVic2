@@ -47,6 +47,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #include "../EU4World/EU4Relations.h"
 #include "../EU4World/EU4Leader.h"
 #include "../EU4World/EU4Diplomacy.h"
+#include "../EU4World/ActiveWar.h"
 #include "../EU4World/Provinces/EU4Province.h"
 #include "BlockedTechSchools.h"
 #include "StateMapper.h"
@@ -62,6 +63,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #include "V2Flags.h"
 #include "V2LeaderTraits.h"
 #include "Vic2CultureUnionMapper.h"
+#include "V2War.h"
 
 
 
@@ -1793,19 +1795,19 @@ void V2World::convertWars(const EU4::world& sourceWorld)
 {
 	LOG(LogLevel::Info) << "Converting wars";
 
-	for (auto Vic2War : activeWars)
-	{
-		//for (vector<const EU4::ActiveWar*>::iterator vitr = mitr->second.activeWars.begin(); vitr != mitr->second.activeWars.end(); ++vitr)
-		auto oldAttackers = Vic2War.getAttackers(); // maybe something different than Vic2War?
+	//for (auto Vic2War : activeWars)
+	//{
+		const EU4::ActiveWar& activeWar = sourceWorld.getActiveWar(1);
+		auto oldAttackers = activeWar.getAttackers();
 		for (auto oldAttacker : oldAttackers)
 		{
 			const std::string& attackerV2Tag = mappers::CountryMappings::getVic2Tag(oldAttacker); // TODO: LOOK AT ME!!!!!!!!!!!!!!!!!!!!!!!!!!
 			if (!attackerV2Tag.empty())
 			{
-				Vic2War.second->addAttacker(attackerV2Tag);
+				//Vic2War.second->addAttacker(attackerV2Tag);
 			}
 		}
-	}
+	//}
 }
 
 void V2World::output() const

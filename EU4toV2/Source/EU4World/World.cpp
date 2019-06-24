@@ -33,6 +33,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #include "Provinces/EU4Province.h"
 #include "Regions/Areas.h"
 #include "ActiveWar.h"
+#include "ActiveWars.h"
 #include "../Configuration.h"
 #include "../Mappers/ProvinceMappings/ProvinceMapper.h"
 #include "../Mappers/ReligionMapper.h"
@@ -137,7 +138,7 @@ EU4::world::world(const string& EU4SaveFileName) :
 		*/
 		ActiveWarIterator++;
 		ActiveWar newActiveWar(unused, theStream);
-		activeWars.insert(std::make_pair(ActiveWarIterator, std::move(newActiveWar)));
+		EU4::ActiveWars::activeWars.insert(std::make_pair(ActiveWarIterator, std::move(newActiveWar)));
 	});
 	registerKeyword(std::regex("[A-Za-z0-9\\_]+"), commonItems::ignoreItem);
 
@@ -934,4 +935,9 @@ bool EU4::world::isRandomWorld() const
 	}
 
 	return isRandomWorld;
+}
+
+const EU4::ActiveWar& EU4::world::getActiveWar(int activeWarNumber) const
+{
+	return activeWars->getActiveWar(activeWarNumber);
 }

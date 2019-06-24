@@ -31,6 +31,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 #include "EU4Version.h"
 #include "Provinces/Provinces.h"
 #include "ActiveWar.h"
+#include "ActiveWars.h"
 #include "Regions/Regions.h"
 #include "Religions/Religions.h"
 #include "../Mappers/CultureMapper.h"
@@ -56,6 +57,7 @@ class world: private commonItems::parser
 		world(const std::string& EU4SaveFileName);
 
 		const Province& getProvince(int provNum) const;
+		const ActiveWar& getActiveWar(int activeWarNumber) const;
 
 		void checkAllEU4CulturesMapped(const mappers::CultureMapper& cultureMapper) const;
 		void checkAllEU4ReligionsMapped(const mappers::ReligionMapper& religionMapper) const;
@@ -123,7 +125,7 @@ class world: private commonItems::parser
 
 		Religions theReligions;
 
-		std::map<int, ActiveWar> activeWars;
+		std::unique_ptr<ActiveWars> activeWars;
 };
 
 }

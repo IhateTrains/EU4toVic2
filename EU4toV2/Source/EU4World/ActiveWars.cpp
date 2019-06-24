@@ -20,46 +20,22 @@ THE SOFTWARE. */
 
 
 
-#include "Provinces.h"
+#include "ActiveWars.h"
 #include "Log.h"
 #include <stdexcept>
 #include <string>
 
 
-
-EU4::Provinces::Provinces(std::istream& theStream)
+EU4::ActiveWar& EU4::ActiveWars::getActiveWar(int activeWarNumber)
 {
-	registerKeyword(std::regex("-[0-9]+"), [this](const std::string& numberString, std::istream& theStream) {
-		Province newProvince(numberString, theStream);
-		provinces.insert(std::make_pair(newProvince.getNum(), std::move(newProvince)));
-	});
-	parseStream(theStream);
-}
-
-
-EU4::Province& EU4::Provinces::getProvince(int provinceNumber)
-{
-	std::map<int, Province>::iterator province = provinces.find(provinceNumber);
-	if (province == provinces.end())
+	std::map<int, ActiveWar>::iterator activeWar = activeWars.find(activeWarNumber);
+	if (activeWar == activeWars.end())
 	{
-		std::range_error exception(std::string("Old province ") + std::to_string(provinceNumber) + std::string(" does not exist (bad mapping?)"));
+		std::range_error exception(std::string("Old active war ") + std::to_string(activeWarNumber) + std::string(" does not exist"));
 		throw exception;
 	}
 	else
 	{
-		return province->second;
-	}
-}
-
-
-void EU4::Provinces::checkAllProvincesMapped(const mappers::ProvinceMapper& provinceMapper) const
-{
-	for (auto& province: provinces)
-	{
-		auto Vic2Provinces = provinceMapper.getVic2ProvinceNumbers(province.first);
-		if (Vic2Provinces.size() == 0)
-		{
-			LOG(LogLevel::Warning) << "No mapping for province " << province.first;
-		}
+		return activeWar->second;
 	}
 }

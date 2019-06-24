@@ -27,6 +27,9 @@
 	<ClCompile Include="Source\EU4World\ActiveWar.cpp">
       <Filter>EU4World</Filter>
     </ClCompile>
+	<ClCompile Include="Source\EU4World\ActiveWars.cpp">
+      <Filter>EU4World</Filter>
+    </ClCompile>
 	<ClCompile Include="Source\EU4World\ActiveWarHistory.cpp">
       <Filter>EU4World</Filter>
     </ClCompile>
@@ -299,6 +302,9 @@
       <Filter>Mappers</Filter>
     </ClInclude>
 	<ClInclude Include="Source\EU4World\ActiveWar.h">
+      <Filter>EU4World</Filter>
+    </ClInclude>
+	<ClInclude Include="Source\EU4World\ActiveWars.h">
       <Filter>EU4World</Filter>
     </ClInclude>
 	<ClInclude Include="Source\EU4World\ActiveWarHistory.h">
