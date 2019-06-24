@@ -22,85 +22,110 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
 
 #include "gtest/gtest.h"
-#include "../EU4toV2/Source/EU4World/Provinces/Provinces.h"
-#include "../EU4toV2/Source/Mappers/ProvinceMappings/ProvinceMapper.h"
+#include "../EU4toV2/Source/EU4World/Mods/Mod.h"
 #include <sstream>
 
 
 
-TEST(EU4World_ProvincesTests, defaultProvincesIsEmpty)
+TEST(EU4World_ModTests, defaultNameIsBlank)
 {
 	std::stringstream input;
 	input << "={}";
 
-	EU4::Provinces theProvinces(input);
-	ASSERT_EQ(theProvinces.getAllProvinces().size(), 0);
+	EU4::Mod theMod(input);
+	ASSERT_EQ(theMod.getName(), "");
 }
 
 
-TEST(EU4World_ProvincesTests, provincesCanBeInput)
+TEST(EU4World_ModTests, nameCanBeSet)
 {
 	std::stringstream input;
 	input << "={\n";
-	input << "={\n";
-	input << "-1={}";
-	input << "}\n";
+	input << "	name=modName\n";
 	input << "}";
 
-	EU4::Provinces theProvinces(input);
-	ASSERT_EQ(theProvinces.getAllProvinces().size(), 1);
+	EU4::Mod theMod(input);
+	ASSERT_EQ(theMod.getName(), "modName");
 }
 
 
-TEST(EU4World_ProvincesTests, gettingNonExsistentProvinceThrowsException)
+TEST(EU4World_ModTests, defaultPathIsBlank)
 {
 	std::stringstream input;
-	input << "={\n";
-	input << "={\n";
-	input << "-1={}";
-	input << "}\n";
-	input << "}";
+	input << "={}";
 
-	EU4::Provinces theProvinces(input);
-	ASSERT_THROW(theProvinces.getProvince(42), std::range_error);
+	EU4::Mod theMod(input);
+	ASSERT_EQ(theMod.getPath(), "");
 }
 
 
-TEST(EU4World_ProvincesTests, canGetProvince)
+TEST(EU4World_ModTests, pathCanBeSet)
 {
 	std::stringstream input;
 	input << "={\n";
-	input << "={\n";
-	input << "-1={}";
-	input << "}\n";
+	input << "	path=modPath\n";
 	input << "}";
 
-	EU4::Provinces theProvinces(input);
-	ASSERT_EQ(theProvinces.getProvince(1).getNum(), 1);
+	EU4::Mod theMod(input);
+	ASSERT_EQ(theMod.getPath(), "modPath");
 }
 
-/* No longet tested, as it requires file I/O
-TEST(EU4World_ProvincesTests, checkAllProvincesMappedNotesMissingProvince)
+
+TEST(EU4World_ModTests, pathCanBeSetFromArchive)
 {
 	std::stringstream input;
 	input << "={\n";
-	input << "={\n";
-	input << "-1={}";
-	input << "}\n";
+	input << "	archive=modPath\n";
 	input << "}";
-	EU4::Provinces theProvinces(input);
 
-	std::stringstream provinceMapperInput;
-	provinceMapperInput << "0.0.0.0 = {\n";
-	provinceMapperInput << "}";
-	Configuration testConfig;
-	mappers::ProvinceMapper mapper(provinceMapperInput, testConfig);
+	EU4::Mod theMod(input);
+	ASSERT_EQ(theMod.getPath(), "modPath");
+}
 
-	std::stringstream buffer;
-	std::streambuf* sbuf = std::cout.rdbuf();
-	std::cout.rdbuf(buffer.rdbuf());
-	theProvinces.checkAllProvincesMapped(mapper);
-	std::cout.rdbuf(sbuf);
 
-	ASSERT_EQ(buffer.str(), "No mapping for province 1\n");
-}*/
+TEST(EU4World_ModTests, modIsInvalidIfNothingSet)
+{
+	std::stringstream input;
+	input << "={\n";
+	input << "}";
+
+	EU4::Mod theMod(input);
+	ASSERT_FALSE(theMod.isValid());
+}
+
+
+TEST(EU4World_ModTests, modIsInvalidIfPathNotSet)
+{
+	std::stringstream input;
+	input << "={\n";
+	input << "	name=modName\n";
+	input << "}";
+
+	EU4::Mod theMod(input);
+	ASSERT_FALSE(theMod.isValid());
+}
+
+
+TEST(EU4World_ModTests, modIsInvalidIfNameNotSet)
+{
+	std::stringstream input;
+	input << "={\n";
+	input << "	path=modPath\n";
+	input << "}";
+
+	EU4::Mod theMod(input);
+	ASSERT_FALSE(theMod.isValid());
+}
+
+
+TEST(EU4World_ModTests, modIsValidIfNameAndPathSet)
+{
+	std::stringstream input;
+	input << "={\n";
+	input << "	name=modName\n";
+	input << "	path=modPath\n";
+	input << "}";
+
+	EU4::Mod theMod(input);
+	ASSERT_TRUE(theMod.isValid());
+}

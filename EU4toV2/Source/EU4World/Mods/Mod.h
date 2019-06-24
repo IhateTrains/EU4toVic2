@@ -21,34 +21,34 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
 
 
-#include "ProvinceMapping.h"
-#include "ParserHelpers.h"
+#ifndef EU4_MOD_H_
+#define EU4_MOD_H_
 
 
 
-mappers::ProvinceMapping::ProvinceMapping(std::istream& theStream)
+#include "newParser.h"
+
+
+
+namespace EU4
 {
-	registerKeyword(std::regex("eu4"), [this](const std::string & unused, std::istream & theStream) {
-		commonItems::singleInt provinceInt(theStream);
-		EU4Provinces.push_back(provinceInt.getInt());
-	});
-	registerKeyword(std::regex("v2"), [this](const std::string& unused, std::istream& theStream){
-		commonItems::singleInt provinceInt(theStream);
-		Vic2Provinces.push_back(provinceInt.getInt());
-	});
-	registerKeyword(std::regex("resettable"), [this](const std::string& unused, std::istream& theStream){
-		commonItems::singleString regionString(theStream);
-		resettableRegions.insert(regionString.getString());
-	});
 
-	parseStream(theStream);
+class Mod: commonItems::parser
+{
+	public:
+		Mod(std::istream& theStream);
 
-	if (EU4Provinces.empty())
-	{
-		EU4Provinces.push_back(0);
-	}
-	if (Vic2Provinces.empty())
-	{
-		Vic2Provinces.push_back(0);
-	}
+		std::string getName() const { return name; }
+		std::string getPath() const { return path; }
+		bool isValid() const { return (name != "") && (path != ""); }
+
+	private:
+		std::string name;
+		std::string path;
+};
+
 }
+
+
+
+#endif // EU4_MOD_H_

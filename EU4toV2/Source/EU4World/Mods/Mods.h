@@ -21,34 +21,37 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
 
 
-#include "ProvinceMapping.h"
-#include "ParserHelpers.h"
+#ifndef EU4_MODS_H_
+#define EU4_MODS_H_
 
 
 
-mappers::ProvinceMapping::ProvinceMapping(std::istream& theStream)
+#include "newParser.h"
+#include "../../Configuration.h"
+#include <map>
+#include <optional>
+#include <string>
+
+
+
+namespace EU4
 {
-	registerKeyword(std::regex("eu4"), [this](const std::string & unused, std::istream & theStream) {
-		commonItems::singleInt provinceInt(theStream);
-		EU4Provinces.push_back(provinceInt.getInt());
-	});
-	registerKeyword(std::regex("v2"), [this](const std::string& unused, std::istream& theStream){
-		commonItems::singleInt provinceInt(theStream);
-		Vic2Provinces.push_back(provinceInt.getInt());
-	});
-	registerKeyword(std::regex("resettable"), [this](const std::string& unused, std::istream& theStream){
-		commonItems::singleString regionString(theStream);
-		resettableRegions.insert(regionString.getString());
-	});
 
-	parseStream(theStream);
+class Mods: commonItems::parser
+{
+	public:
+		Mods(std::istream& theStream, Configuration& theConfiguration);
 
-	if (EU4Provinces.empty())
-	{
-		EU4Provinces.push_back(0);
-	}
-	if (Vic2Provinces.empty())
-	{
-		Vic2Provinces.push_back(0);
-	}
+		std::optional<std::string> getModPath(const std::string& modName) const;
+
+	private:
+		void loadEU4ModDirectory(const Configuration& theConfiguration);
+		void loadCK2ExportDirectory(const Configuration& theConfiguration);
+
+		std::map<std::string, std::string> possibleMods;
+};
+
 }
+
+
+#endif // EU4_MODS_H_
