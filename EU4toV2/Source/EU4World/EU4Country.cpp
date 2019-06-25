@@ -85,7 +85,6 @@ EU4::Country::Country(const std::string& countryTag, const EU4::Version& theVers
 	acceptedCultures(),
 	culturalUnion({}),
 	religion(),
-	score(0.0),
 	stability(-3.0),
 	admTech(0.0),
 	dipTech(0.0),
@@ -255,12 +254,14 @@ EU4::Country::Country(const std::string& countryTag, const EU4::Version& theVers
 			religion = theReligion.getString();
 		}
 	);
-	registerKeyword(std::regex("score"), [this](const std::string& unused, std::istream& theStream)
-		{
-			commonItems::singleDouble theScore(theStream);
-			score = theScore.getDouble();
-		}
-	);
+	registerKeyword(std::regex("score"), [this](const std::string& unused, std::istream& theStream) {
+		commonItems::singleDouble theScore(theStream);
+		score = theScore.getDouble();
+	});
+	registerKeyword(std::regex("great_power_score"), [this](const std::string& unused, std::istream& theStream) {
+		commonItems::singleDouble theScore(theStream);
+		score = theScore.getDouble();
+	});
 	registerKeyword(std::regex("stability"), [this](const std::string& unused, std::istream& theStream)
 		{
 			commonItems::singleDouble theStability(theStream);
